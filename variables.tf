@@ -1,5 +1,7 @@
-variable "environment" {
-  type = string
+variable "k8s_labels" {
+  type        = map(string)
+  description = "Labels to apply to all Kubernetes objects"
+  default     = {}
 }
 
 variable "bitbucket_runners" {
