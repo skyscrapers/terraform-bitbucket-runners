@@ -30,7 +30,8 @@ resource "kubernetes_stateful_set" "bitbucket_runner" {
       }
 
       spec {
-        node_selector = var.k8s_node_selector
+        node_selector        = var.k8s_node_selector
+        service_account_name = kubernetes_service_account.bitbucket_runner.metadata.0.name
 
         dynamic "toleration" {
           for_each = var.k8s_tolerations

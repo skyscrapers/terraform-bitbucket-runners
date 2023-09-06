@@ -39,6 +39,12 @@ variable "k8s_tolerations" {
   default     = []
 }
 
+variable "k8s_service_account_annotations" {
+  type        = map(string)
+  description = "Annotations to attach to the ServiceAccount"
+  default     = {}
+}
+
 variable "pod_default_resources" {
   type = object({
     limits = optional(object({
