@@ -5,7 +5,7 @@ resource "kubernetes_stateful_set" "bitbucket_runner" {
     name      = "bitbucket-${each.key}"
     namespace = var.k8s_namespace
 
-    labels = merge(local.k8s_default_labels, {
+    labels = merge(var.k8s_labels, {
       "app.kubernetes.io/name"     = "bitbucket-runner"
       "app.kubernetes.io/instance" = each.key
     })

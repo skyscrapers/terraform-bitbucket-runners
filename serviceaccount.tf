@@ -3,7 +3,7 @@ resource "kubernetes_service_account" "bitbucket_runner" {
     name      = "bitbucket-runner"
     namespace = var.k8s_namespace
 
-    labels = merge(local.k8s_default_labels, {
+    labels = merge(var.k8s_labels, {
       "app.kubernetes.io/name" = "bitbucket-runner"
     })
 
