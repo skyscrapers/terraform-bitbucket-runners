@@ -144,13 +144,13 @@ resource "kubernetes_stateful_set" "bitbucket_runner" {
 
           resources {
             limits = {
-              cpu    = try(each.value.resources.limits.cpu, var.pod_default_resources.limits.cpu, null)
-              memory = try(each.value.resources.limits.memory, var.pod_default_resources.limits.memory, null)
+              cpu    = try(each.value.runner_resources.limits.cpu, var.bitbucket_runner_container_default_resources.limits.cpu, null)
+              memory = try(each.value.runner_resources.limits.memory, var.bitbucket_runner_container_default_resources.limits.memory, null)
             }
 
             requests = {
-              cpu    = try(each.value.resources.requests.cpu, var.pod_default_resources.requests.cpu, null)
-              memory = try(each.value.resources.requests.memory, var.pod_default_resources.requests.memory, null)
+              cpu    = try(each.value.runner_resources.requests.cpu, var.bitbucket_runner_container_default_resources.requests.cpu, null)
+              memory = try(each.value.runner_resources.requests.memory, var.bitbucket_runner_container_default_resources.requests.memory, null)
             }
           }
         }
@@ -180,12 +180,13 @@ resource "kubernetes_stateful_set" "bitbucket_runner" {
 
           resources {
             limits = {
-              memory = "16G"
+              cpu    = try(each.value.dind_resources.limits.cpu, var.dind_container_default_resources.limits.cpu, null)
+              memory = try(each.value.dind_resources.limits.memory, var.dind_container_default_resources.limits.memory, null)
             }
 
             requests = {
-              cpu    = "4"
-              memory = "6G"
+              cpu    = try(each.value.dind_resources.requests.cpu, var.dind_container_default_resources.requests.cpu, null)
+              memory = try(each.value.dind_resources.requests.memory, var.dind_container_default_resources.requests.memory, null)
             }
           }
         }
