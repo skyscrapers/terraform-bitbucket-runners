@@ -57,7 +57,7 @@ resource "kubernetes_stateful_set" "bitbucket_runner" {
         }
 
         container {
-          image = "docker-public.packages.atlassian.com/sox/atlassian/bitbucket-pipelines-runner:1"
+          image = "docker-public.packages.atlassian.com/sox/atlassian/bitbucket-pipelines-runner:${var.runner_version}"
           name  = "runner"
 
           env {
