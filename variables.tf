@@ -30,6 +30,12 @@ variable "bitbucket_runners" {
   description = "Map of Bitbucket runner definitions"
 }
 
+variable "runner_version" {
+  type        = number
+  description = "Version of the Bitbucket runner to deploy"
+  default     = 1
+}
+
 variable "k8s_namespace" {
   type        = string
   description = "Kubernetes namespace where to deploy the runners to"
