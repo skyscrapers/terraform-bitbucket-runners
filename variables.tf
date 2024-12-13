@@ -31,7 +31,7 @@ variable "bitbucket_runners" {
       cronSyntax      = string
       timeZone        = string
       desiredReplicas = number
-    })))
+    })), [])
   }))
   description = "Map of Bitbucket runner definitions"
 }
