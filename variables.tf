@@ -26,11 +26,12 @@ variable "bitbucket_runners" {
         memory = optional(string)
       }))
     }))
-    cron_scaling_enabled       = optional(bool, false)
-    timeZone                   = optional(string, "UTC")
-    working_hours              = optional(string, "0 6-23 * * 1-5")
-    non_working_hours_weekdays = optional(string, "0 0-5,23 * * 1-5")
-    non_working_days           = optional(string, "0 0-23 * * 6-7")
+    cron_scaling_enabled = optional(bool, false)
+    triggers             = optional(list(object({
+      cronSyntax      = string
+      timeZone        = string
+      desiredReplicas = number
+    })))
   }))
   description = "Map of Bitbucket runner definitions"
 }
