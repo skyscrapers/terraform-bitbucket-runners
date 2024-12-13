@@ -19,20 +19,12 @@ resource "kubernetes_manifest" "scaledobject_cron" {
       "minReplicaCount" = 0
       "maxReplicaCount" = 1
       "triggers" = [
-        {
-          "type"     = "cron"
+        for trigger in lookup(each.value, "triggers", []) : {
+          "type" = "cron"
           "metadata" = {
-            "timeZone"        = lookup(each.value, "timeZone", "UTC")
-            "schedule"        = lookup(each.value, "working_hours", "0 6-23 * * 1-5")
-            "desiredReplicas" = "1"
-          }
-        },
-        {
-          "type"     = "cron"
-          "metadata" = {
-            "timeZone"        = lookup(each.value, "timeZone", "UTC")
-            "schedule"        = lookup(each.value, "non_working_hours", "0 0-5 * * 1-5, 0-23 * * 6, 0-23 * * 7")
-            "desiredReplicas" = "0"
+            "schedule"        = trigger.cronSyntax
+            "timeZone"        = trigger.timeZone
+            "desiredReplicas" = tostring(trigger.desiredReplicas)
           }
         }
       ]
