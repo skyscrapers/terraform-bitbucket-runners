@@ -31,7 +31,15 @@ resource "kubernetes_manifest" "scaledobject_cron" {
           "type"     = "cron"
           "metadata" = {
             "timeZone"        = lookup(each.value, "timeZone", "UTC")
-            "schedule"        = lookup(each.value, "non_working_hours", "0 0-5 * * 1-5, 0-23 * * 6, 0-23 * * 7")
+            "schedule"        = lookup(each.value, "non_working_hours_weekdays", "0 0-5,23 * * 1-5")
+            "desiredReplicas" = "0"
+          }
+        },
+        {
+          "type"     = "cron"
+          "metadata" = {
+            "timeZone"        = lookup(each.value, "timeZone", "UTC")
+            "schedule"        = lookup(each.value, "non_working_days", "0 0-23 * * 6-7")
             "desiredReplicas" = "0"
           }
         }
