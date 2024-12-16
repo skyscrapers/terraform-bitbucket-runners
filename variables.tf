@@ -28,8 +28,9 @@ variable "bitbucket_runners" {
     }))
     cron_scaling_enabled = optional(bool, false)
     triggers             = optional(list(object({
-      cronSyntax      = string
-      timeZone        = string
+      start           = string
+      end             = string
+      timezone        = string
       desiredReplicas = number
     })), [])
   }))

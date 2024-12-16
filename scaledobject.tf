@@ -14,7 +14,9 @@ resource "kubernetes_manifest" "scaledobject_cron" {
     
     "spec" = {
       "scaleTargetRef" = {
-        "name" = "bitbucket-${each.key}"
+        "name"       = "bitbucket-${each.key}"
+        "apiVersion" = "apps/v1"
+        "kind"       = "StatefulSet"
       }
       "minReplicaCount" = 0
       "maxReplicaCount" = 1
@@ -22,8 +24,9 @@ resource "kubernetes_manifest" "scaledobject_cron" {
         for trigger in lookup(each.value, "triggers", []) : {
           "type" = "cron"
           "metadata" = {
-            "schedule"        = trigger.cronSyntax
-            "timeZone"        = trigger.timeZone
+            "start"           = trigger.start
+            "end"             = trigger.end
+            "timezone"        = trigger.timezone
             "desiredReplicas" = tostring(trigger.desiredReplicas)
           }
         }
