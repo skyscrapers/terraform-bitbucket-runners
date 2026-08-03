@@ -156,7 +156,7 @@ resource "kubernetes_stateful_set" "bitbucket_runner" {
         }
 
         container {
-          image = "public.ecr.aws/docker/library/docker:20.10.5-dind"
+          image = "public.ecr.aws/docker/library/docker:${var.dind_image_tag}"
           name  = "docker-in-docker"
 
           security_context {
