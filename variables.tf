@@ -38,9 +38,20 @@ variable "bitbucket_runners" {
 }
 
 variable "runner_version" {
-  type        = number
-  description = "Version of the Bitbucket runner to deploy"
-  default     = 1
+  type        = string
+  description = "Tag of the Bitbucket runner image to deploy. Accepts `latest`, a major (`6`) or an exact version (`6.0.7`)"
+  default     = "latest"
+}
+
+variable "dind_image_tag" {
+  type        = string
+  description = "Tag of the docker-in-docker image to deploy. Must be a `dind` variant, e.g. `dind`, `29-dind` or `29.7.0-dind`"
+  default     = "dind"
+
+  validation {
+    condition     = can(regex("dind", var.dind_image_tag))
+    error_message = "The dind_image_tag must be a `dind` variant. The non-dind tags ship only the Docker CLI and run no daemon."
+  }
 }
 
 variable "k8s_namespace" {
